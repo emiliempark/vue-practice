@@ -1,0 +1,8 @@
+{
+  "name": "vue-practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/emiliempark/vue-practice.git",
+  "author": "EmiliePark <emiliempark@gmail.com>",
+  "license": "MIT"
+}
