@@ -1,37 +1,40 @@
 <template>
-  <form class="contact-form" @submit.prevent="sendEmail">
-    <label>Name</label>
-    <input type="text" name="user_name" />
-    <label>Email</label>
-    <input type="email" name="user_email" />
-    <label>Message</label>
-    <textarea name="message"></textarea>
-    <input type="submit" value="Send" />
-  </form>
+  <div class="pageContact">
+    <hgroup>
+      <h2>
+        Contact Us
+      </h2>
+      <p>
+        Feel free to contact us for any questions
+      </p>
+    </hgroup>
+    <ContactForm />
+  </div>
 </template>
 
 <script>
-import emailjs from "emailjs-com";
+import ContactForm from "@/components/ContactForm.vue";
 
 export default {
-  methods: {
-    sendEmail: (e) => {
-      emailjs
-        .sendForm(
-          "gmail",
-          "template_OXrECX91",
-          e.target,
-          "user_h0nO51xg6TSNC1YRhNCaK"
-        )
-        .then(
-          (result) => {
-            console.log("SUCCESS!", result.status, result.text);
-          },
-          (error) => {
-            console.log("FAILED...", error);
-          }
-        );
-    },
+  name: "Contanct",
+  components: {
+    ContactForm,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.pageContact {
+  display: flex;
+  justify-content: center;
+  hgroup {
+    margin-right: 32px;
+    max-width: 350px;
+    width: 100%;
+    h2,
+    p {
+      text-align: left;
+    }
+  }
+}
+</style>
