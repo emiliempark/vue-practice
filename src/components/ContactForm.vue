@@ -57,9 +57,10 @@ form {
       box-sizing: border-box;
       display: flex;
       height: 36px;
-      align-items: center;
+      align-items: flex-end;
       font-size: 12px;
       font-weight: 700;
+      margin-bottom: 4px;
     }
     input {
       box-sizing: border-box;
