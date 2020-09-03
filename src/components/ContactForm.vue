@@ -3,24 +3,24 @@
     <form class="contactForm" @submit.prevent="handleSubmit(sendEmail)">
       <ValidationProvider name="Name" rules="required|max">
         <div class="field">
-          <label>Name</label>
-          <input type="text" name="from_name" v-model="name" />
-          <span v-if="errors.name">{{ errors.name[0] }}</span>
+          <label>성함</label>
+          <input type="text" name="from_name" v-model="name" autocomplete="off" />
+          <span class="error" v-if="errors.name">{{ errors.name[0] }}</span>
         </div>
       </ValidationProvider>
       <ValidationProvider>
         <div class="field">
-          <label>Email</label>
+          <label>이메일</label>
           <input type="email" name="from_email" v-model="email" value="email" />
         </div>
       </ValidationProvider>
       <ValidationProvider>
         <div class="field">
-          <label>Message</label>
+          <label>본문</label>
           <textarea name="message" v-model="message"></textarea>
         </div>
       </ValidationProvider>
-      <input type="submit" value="Send" />
+      <input type="submit" value="보내기" />
     </form>
   </ValidationObserver>
 </template>
@@ -64,7 +64,7 @@ export default {
       console.log("name", newVal, oldVal);
       this.name = newVal;
       // validate new value
-      this.errors.name = validator.validate("name", this.name);
+      this.errors.name = validator.validate("성함", this.name.trim());
     }
     // email(val) {},
     // message(val) {},
@@ -131,6 +131,11 @@ form {
       max-width: 350px;
       height: 200px;
       padding: 8px;
+    }
+    .error {
+      display: flex;
+      font-size: 12px;
+      padding: 8px 8px 0 8px;
     }
   }
   input[type="submit"] {
