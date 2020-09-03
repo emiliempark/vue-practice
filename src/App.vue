@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div>App Name</div>
+    <div>백천서당</div>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
       <router-link to="/contact">Contact</router-link>
     </div>
