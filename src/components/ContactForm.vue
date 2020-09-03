@@ -1,7 +1,7 @@
 <template>
   <ValidationObserver>
     <form class="contactForm" @submit.prevent="handleSubmit(sendEmail)">
-      <ValidationProvider name="Name" rules="required|max">
+      <ValidationProvider name="Name">
         <div class="field">
           <label>성함</label>
           <input type="text" name="from_name" v-model="name" autocomplete="off" />
@@ -11,13 +11,15 @@
       <ValidationProvider>
         <div class="field">
           <label>이메일</label>
-          <input type="email" name="from_email" v-model="email" value="email" />
+          <input type="email" name="from_email" v-model="email" autocomplete="off" />
+          <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
         </div>
       </ValidationProvider>
       <ValidationProvider>
         <div class="field">
           <label>본문</label>
           <textarea name="message" v-model="message"></textarea>
+          <span class="error" v-if="errors.message">{{ errors.message[0] }}</span>
         </div>
       </ValidationProvider>
       <input type="submit" value="보내기" />
@@ -27,19 +29,19 @@
 
 <script>
 // import emailjs from "emailjs-com";
-import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 import validator from "../validator";
 
-// extend rules
-extend("required", value => {
-  console.log("rules extended", value, value.length, value.length >= 0);
-  return value.length >= 0;
-});
+// // extend rules
+// extend("required", value => {
+//   console.log("rules extended", value, value.length, value.length >= 0);
+//   return value.length >= 0;
+// });
 
-extend("max", value => {
-  console.log("max rule", value);
-  return value.length <= 3;
-});
+// extend("max", value => {
+//   console.log("max rule", value);
+//   return value.length <= 3;
+// });
 
 export default {
   name: "ContactForm",
@@ -65,9 +67,19 @@ export default {
       this.name = newVal;
       // validate new value
       this.errors.name = validator.validate("성함", this.name.trim());
+    },
+    email(newVal, oldVal) {
+      console.log("email", newVal, oldVal);
+      // validate new value
+      this.email = newVal;
+      this.errors.email = validator.validate("이메일", this.email.trim());
+    },
+    message(newVal, oldVal) {
+      console.log("email", newVal, oldVal);
+      // validate new value
+      this.message = newVal;
+      this.errors.message = validator.validate("본문", this.message.trim());
     }
-    // email(val) {},
-    // message(val) {},
   },
   methods: {
     sendEmail: function() {
@@ -135,7 +147,7 @@ form {
     .error {
       display: flex;
       font-size: 12px;
-      padding: 8px 8px 0 8px;
+      padding: 4px 0 0;
     }
   }
   input[type="submit"] {
