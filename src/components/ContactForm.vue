@@ -1,44 +1,95 @@
 <template>
-  <form class="contactForm" @submit.prevent="sendEmail">
-    <div class="field">
-      <label>Name</label>
-      <input type="text" name="user_name" />
-    </div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" name="user_email" />
-    </div>
-    <div class="field">
-      <label>Message</label>
-      <textarea name="message"></textarea>
-    </div>
-    <input type="submit" value="Send" />
-  </form>
+  <ValidationObserver>
+    <form class="contactForm" @submit.prevent="handleSubmit(sendEmail)">
+      <ValidationProvider name="Name" rules="required|max">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="from_name" v-model="name" />
+          <span v-if="errors.name">{{ errors.name[0] }}</span>
+        </div>
+      </ValidationProvider>
+      <ValidationProvider>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="from_email" v-model="email" value="email" />
+        </div>
+      </ValidationProvider>
+      <ValidationProvider>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" v-model="message"></textarea>
+        </div>
+      </ValidationProvider>
+      <input type="submit" value="Send" />
+    </form>
+  </ValidationObserver>
 </template>
 
 <script>
-import emailjs from "emailjs-com";
+// import emailjs from "emailjs-com";
+import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
+import validator from "../validator";
+
+// extend rules
+extend("required", value => {
+  console.log("rules extended", value, value.length, value.length >= 0);
+  return value.length >= 0;
+});
+
+extend("max", value => {
+  console.log("max rule", value);
+  return value.length <= 3;
+});
+
 export default {
   name: "ContactForm",
-  methods: {
-    sendEmail: (e) => {
-      emailjs
-        .sendForm(
-          "gmail",
-          "template_OXrECX91",
-          e.target,
-          "user_h0nO51xg6TSNC1YRhNCaK"
-        )
-        .then(
-          (result) => {
-            console.log("SUCCESS!", result.status, result.text);
-          },
-          (error) => {
-            console.log("FAILED...", error);
-          }
-        );
-    },
+  components: {
+    ValidationObserver,
+    ValidationProvider
   },
+  data() {
+    return {
+      name: "",
+      email: "",
+      message: "",
+      errors: {
+        name: [],
+        email: [],
+        message: []
+      }
+    };
+  },
+  watch: {
+    name(newVal, oldVal) {
+      console.log("name", newVal, oldVal);
+      this.name = newVal;
+      // validate new value
+      this.errors.name = validator.validate("name", this.name);
+    }
+    // email(val) {},
+    // message(val) {},
+  },
+  methods: {
+    sendEmail: function() {
+      console.log("hi", this.name, this);
+      //   this.errors.name = validator.validate("name", this.name);
+      //   emailjs
+      //     .sendForm(
+      //       "gmail",
+      //       "template_OXrECX91",
+      //       e.target,
+      //       "user_h0nO51xg6TSNC1YRhNCaK"
+      //     )
+      //     .then(
+      //       (result) => {
+      //         console.log("SUCCESS!", result.status, result.text);
+      //       },
+      //       (error) => {
+      //         console.log("FAILED...", error);
+      //       }
+      //     );
+    }
+  }
 };
 </script>
 
