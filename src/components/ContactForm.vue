@@ -1,6 +1,6 @@
 <template>
   <ValidationObserver>
-    <form class="contactForm" @submit.prevent="handleSubmit(sendEmail)">
+    <form class="contactForm" @submit.prevent="validationBeforeSubmit">
       <ValidationProvider name="Name">
         <div class="field">
           <label>성함</label>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-// import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import validator, { fields } from "../validator";
 
@@ -85,23 +85,38 @@ export default {
     }
   },
   methods: {
-    sendEmail: function() {
-      console.log("hi", this.name, this);
-      //   emailjs
-      //     .sendForm(
-      //       "gmail",
-      //       "template_OXrECX91",
-      //       e.target,
-      //       "user_h0nO51xg6TSNC1YRhNCaK"
-      //     )
-      //     .then(
-      //       (result) => {
-      //         console.log("SUCCESS!", result.status, result.text);
-      //       },
-      //       (error) => {
-      //         console.log("FAILED...", error);
-      //       }
-      //     );
+    validationBeforeSubmit: function() {
+      console.log("hi", this, this.errors);
+      // validate all
+      this.errors.name = validator.validate(fields.name, this.name);
+      this.errors.email = validator.validate(fields.email, this.email);
+      this.errors.message = validator.validate(fields.message, this.message);
+      //if errors are 0
+      if (
+        this.errors.name.length == 0 &&
+        this.errors.email.length == 0 &&
+        this.errors.message.length == 0
+      ) {
+        console.log("yay! you can send an email");
+        // this.sendEmail();
+      }
+    },
+    sendEmail: function(e) {
+      emailjs
+        .sendForm(
+          "gmail",
+          "template_OXrECX91",
+          e.target,
+          "user_h0nO51xg6TSNC1YRhNCaK"
+        )
+        .then(
+          result => {
+            console.log("SUCCESS!", result.status, result.text);
+          },
+          error => {
+            console.log("FAILED...", error);
+          }
+        );
     }
   }
 };
@@ -167,3 +182,13 @@ form {
   }
 }
 </style>
+
+function newFunction() {
+  name(newVal,oldVal);
+  {
+    console.log("name",newVal,oldVal);
+    this.name=newVal;
+    // validate new value
+    this.errors.name=validator.validate(fields.name,this.name.trim());
+  }
+}
