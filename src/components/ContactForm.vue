@@ -1,54 +1,30 @@
 <template>
-  <ValidationObserver>
-    <form class="contactForm" @submit.prevent="validationBeforeSubmit">
-      <ValidationProvider name="Name">
-        <div class="field">
-          <label>성함</label>
-          <input type="text" name="from_name" v-model="name" autocomplete="off" />
-          <span class="error" v-if="errors.name">{{ errors.name[0] }}</span>
-        </div>
-      </ValidationProvider>
-      <ValidationProvider>
-        <div class="field">
-          <label>이메일</label>
-          <input type="email" name="from_email" v-model="email" autocomplete="off" />
-          <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
-        </div>
-      </ValidationProvider>
-      <ValidationProvider>
-        <div class="field">
-          <label>본문</label>
-          <textarea name="message" v-model="message"></textarea>
-          <span class="error" v-if="errors.message">{{ errors.message[0] }}</span>
-        </div>
-      </ValidationProvider>
-      <input type="submit" value="보내기" />
-    </form>
-  </ValidationObserver>
+  <form class="contactForm" @submit.prevent="validationBeforeSubmit">
+    <div class="field">
+      <label>성함</label>
+      <input type="text" name="from_name" v-model="name" autocomplete="off" />
+      <span class="error" v-if="errors.name">{{ errors.name[0] }}</span>
+    </div>
+    <div class="field">
+      <label>이메일</label>
+      <input type="email" name="from_email" v-model="email" autocomplete="off" />
+      <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
+    </div>
+    <div class="field">
+      <label>본문</label>
+      <textarea name="message" v-model="message"></textarea>
+      <span class="error" v-if="errors.message">{{ errors.message[0] }}</span>
+    </div>
+    <input type="submit" value="보내기" />
+  </form>
 </template>
 
 <script>
 import emailjs from "emailjs-com";
-import { ValidationObserver, ValidationProvider } from "vee-validate";
 import validator, { fields } from "../validator";
-
-// // extend rules
-// extend("required", value => {
-//   console.log("rules extended", value, value.length, value.length >= 0);
-//   return value.length >= 0;
-// });
-
-// extend("max", value => {
-//   console.log("max rule", value);
-//   return value.length <= 3;
-// });
 
 export default {
   name: "ContactForm",
-  components: {
-    ValidationObserver,
-    ValidationProvider
-  },
   data() {
     return {
       name: "",
@@ -62,21 +38,16 @@ export default {
     };
   },
   watch: {
-    name(newVal, oldVal) {
-      console.log("name", newVal, oldVal);
+    name(newVal) {
+      // (newVal, oldVal)
       this.name = newVal;
-      // validate new value
       this.errors.name = validator.validate(fields.name, this.name.trim());
     },
-    email(newVal, oldVal) {
-      console.log("email", newVal, oldVal);
-      // validate new value
+    email(newVal) {
       this.email = newVal;
       this.errors.email = validator.validate(fields.email, this.email.trim());
     },
-    message(newVal, oldVal) {
-      console.log("email", newVal, oldVal);
-      // validate new value
+    message(newVal) {
       this.message = newVal;
       this.errors.message = validator.validate(
         fields.message,
@@ -86,7 +57,6 @@ export default {
   },
   methods: {
     validationBeforeSubmit: function() {
-      console.log("hi", this, this.errors);
       // validate all
       this.errors.name = validator.validate(fields.name, this.name);
       this.errors.email = validator.validate(fields.email, this.email);
@@ -158,7 +128,7 @@ form {
       outline: none;
       width: 100%;
       max-width: 350px;
-      height: 200px;
+      height: 160px;
       padding: 8px;
     }
     .error {
