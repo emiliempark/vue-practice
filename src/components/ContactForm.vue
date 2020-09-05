@@ -30,7 +30,7 @@
 <script>
 // import emailjs from "emailjs-com";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-import validator from "../validator";
+import validator, { fields } from "../validator";
 
 // // extend rules
 // extend("required", value => {
@@ -66,25 +66,27 @@ export default {
       console.log("name", newVal, oldVal);
       this.name = newVal;
       // validate new value
-      this.errors.name = validator.validate("성함", this.name.trim());
+      this.errors.name = validator.validate(fields.name, this.name.trim());
     },
     email(newVal, oldVal) {
       console.log("email", newVal, oldVal);
       // validate new value
       this.email = newVal;
-      this.errors.email = validator.validate("이메일", this.email.trim());
+      this.errors.email = validator.validate(fields.email, this.email.trim());
     },
     message(newVal, oldVal) {
       console.log("email", newVal, oldVal);
       // validate new value
       this.message = newVal;
-      this.errors.message = validator.validate("본문", this.message.trim());
+      this.errors.message = validator.validate(
+        fields.message,
+        this.message.trim()
+      );
     }
   },
   methods: {
     sendEmail: function() {
       console.log("hi", this.name, this);
-      //   this.errors.name = validator.validate("name", this.name);
       //   emailjs
       //     .sendForm(
       //       "gmail",
