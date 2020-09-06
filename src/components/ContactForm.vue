@@ -7,7 +7,12 @@
     </div>
     <div class="field">
       <label>이메일</label>
-      <input type="email" name="from_email" v-model="email" autocomplete="off" />
+      <input
+        type="email"
+        name="from_email"
+        v-model="email"
+        autocomplete="off"
+      />
       <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
     </div>
     <div class="field">
@@ -153,12 +158,6 @@ form {
 }
 </style>
 
-function newFunction() {
-  name(newVal,oldVal);
-  {
-    console.log("name",newVal,oldVal);
-    this.name=newVal;
-    // validate new value
-    this.errors.name=validator.validate(fields.name,this.name.trim());
-  }
-}
+function newFunction() { name(newVal,oldVal); {
+console.log("name",newVal,oldVal); this.name=newVal; // validate new value
+this.errors.name=validator.validate(fields.name,this.name.trim()); } }

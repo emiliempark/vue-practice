@@ -2,7 +2,7 @@
 export const fields = {
   name: "성함",
   email: "이메일",
-  message: "본문",
+  message: "본문"
 };
 
 export default {
@@ -33,5 +33,5 @@ export default {
     }
 
     return errors;
-  },
+  }
 };
