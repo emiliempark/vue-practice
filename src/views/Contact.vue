@@ -1,12 +1,8 @@
 <template>
   <div class="pageContact">
     <hgroup>
-      <h2>
-        Contact Us
-      </h2>
-      <p>
-        Feel free to contact us for any questions
-      </p>
+      <h2>문의하기</h2>
+      <p>이메일로 연락주세요</p>
     </hgroup>
     <ContactForm />
   </div>
@@ -18,8 +14,8 @@ import ContactForm from "@/components/ContactForm.vue";
 export default {
   name: "Contanct",
   components: {
-    ContactForm,
-  },
+    ContactForm
+  }
 };
 </script>
 
