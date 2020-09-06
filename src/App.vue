@@ -2,44 +2,23 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <v-btn text>백천서당</v-btn>
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn default text>
+        <router-link to="/">Home</router-link>
+      </v-btn>
+      <v-btn text>
+        <router-link to="/about">About</router-link>
+      </v-btn>
+      <v-btn small rounded depressed color="white">
+        <router-link to="/contact">Contact</router-link>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <div>백천서당</div>
-      <div id="nav">
-        <router-link to="/">Home</router-link>|
-        <router-link to="/about">About</router-link>
-        <router-link to="/contact">Contact</router-link>
-      </div>
       <router-view />
     </v-main>
   </v-app>
