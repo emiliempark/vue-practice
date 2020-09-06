@@ -2,19 +2,16 @@
   <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
-        <v-btn text>백천서당</v-btn>
+        <router-link to="/">백천서당</router-link>
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn default text>
-        <router-link to="/">Home</router-link>
-      </v-btn>
       <v-btn text>
-        <router-link to="/about">About</router-link>
+        <router-link to="/about">학술활동/강좌</router-link>
       </v-btn>
       <v-btn small rounded depressed color="white">
-        <router-link to="/contact">Contact</router-link>
+        <router-link to="/contact">강의문의</router-link>
       </v-btn>
     </v-app-bar>
 
